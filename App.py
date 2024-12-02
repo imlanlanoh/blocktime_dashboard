@@ -6,8 +6,6 @@ from dash import dcc, html
 import threading
 import webview
 
-# webview.config.gui = 'cocoa'
-
 # Determine the base directory
 if getattr(sys, 'frozen', False):
     # If the application is frozen (e.g., packaged with cx_Freeze)
@@ -119,23 +117,5 @@ app.layout = html.Div(
     ],
 )
 
-# Function to create the PyWebview window
 if __name__ == "__main__":
-    # Run the app using PyWebview
-    def open_window():
-        webview.create_window(
-            "Surgery Block Time Dashboard",
-            "http://127.0.0.1:8050",
-            width=1200,
-            height=800,
-            min_size=(800, 600)
-        )
-
-    # Start the Dash server in a separate thread
-    threading.Thread(target=lambda: app.run_server(port=8050, debug=False, use_reloader=False)).start()
-
-    # Start the PyWebview window
-    try:
-        webview.start(open_window, gui='cocoa')
-    except Exception as e:
-        print(f"An error occurred: {e}")
+    app.run_server(port=8080, debug=True)
