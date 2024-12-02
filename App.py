@@ -1,29 +1,19 @@
-import sys
 import os
 import dash
 import dash_bootstrap_components as dbc
 from dash import dcc, html
-import threading
-import webview
 
 # Determine the base directory
-if getattr(sys, 'frozen', False):
-    # If the application is frozen (e.g., packaged with cx_Freeze)
-    base_dir = os.path.dirname(sys.executable)
-    resources_dir = os.path.join(os.path.dirname(base_dir), 'Resources')
-else:
-    # If the application is running as a script
-    base_dir = os.path.dirname(os.path.abspath(__file__))
-    resources_dir = base_dir
+base_dir = os.path.dirname(os.path.abspath(__file__))
 
 # Set the assets and pages folder paths
-assets_folder = os.path.join(resources_dir, 'assets')
-pages_folder = os.path.join(resources_dir, 'pages')
+assets_folder = os.path.join(base_dir, 'assets')
+pages_folder = os.path.join(base_dir, 'pages')
 
 # Initialize the app with the correct pages_folder path
 app = dash.Dash(
     __name__,
-    pages_folder=pages_folder,  # Set the pages_folder parameter
+    pages_folder=pages_folder,
     assets_folder=assets_folder,
     use_pages=True,
     title="Surgery Block Time Dashboard",
@@ -118,4 +108,4 @@ app.layout = html.Div(
 )
 
 if __name__ == "__main__":
-    app.run_server(port=8080, debug=True)
+    app.run_server(debug=False, host='0.0.0.0')
